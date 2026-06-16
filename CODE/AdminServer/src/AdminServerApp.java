@@ -1053,8 +1053,49 @@ public void removeClientCard(String clientName) {
 
 
     powerBtn.addActionListener(e -> {
-        addLog("[POWER] Open power control for " + clientName);
-    });
+
+    String[] options = {
+            "Khóa màn hình",
+            "Tắt máy",
+            "Khởi động lại"
+    };
+
+    String selected =
+            (String) JOptionPane.showInputDialog(
+                    dialog,
+                    "Chọn lệnh điều khiển",
+                    "System Power",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+
+    if (selected == null) {
+        return;
+    }
+
+    if (selected.equals("Khóa màn hình")) {
+        controller.sendPowerCommand(
+                clientName,
+                "LOCK"
+        );
+    }
+
+    if (selected.equals("Tắt máy")) {
+        controller.sendPowerCommand(
+                clientName,
+                "SHUTDOWN"
+        );
+    }
+
+    if (selected.equals("Khởi động lại")) {
+        controller.sendPowerCommand(
+                clientName,
+                "RESTART"
+        );
+    }
+});
 
 
     closeBtn.addActionListener(e -> dialog.dispose());
