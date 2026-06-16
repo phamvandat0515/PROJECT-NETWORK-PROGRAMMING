@@ -49,7 +49,16 @@ public class UIClient extends JFrame {
                         );
                     });
                 }
-            }
+                else if (message.startsWith("POWER|")) {
+
+    String command =
+            message.substring(
+                    "POWER|".length()
+            );
+
+    executePowerCommand(command);
+}
+            
         } catch (Exception e) {
             System.out.println("[CLIENT] Dừng nhận tin nhắn từ server.");
         }
