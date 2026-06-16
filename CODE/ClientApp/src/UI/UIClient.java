@@ -312,5 +312,64 @@ public class UIClient extends JFrame {
             new UIClient().setVisible(true);
         });
     }
-    
+  // Hàm xử lý lệnh điều khiển nguồn
+private void executePowerCommand(String command) {
+
+    try {
+
+        switch (command) {
+
+            case "LOCK":
+
+                System.out.println(
+                        "[CLIENT] Nhận lệnh khóa màn hình"
+                );
+
+                Runtime.getRuntime().exec(
+                        "rundll32.exe user32.dll,LockWorkStation"
+                );
+
+                break;
+
+            case "SHUTDOWN":
+
+                System.out.println(
+                        "[CLIENT] Nhận lệnh tắt máy"
+                );
+
+                Runtime.getRuntime().exec(
+                        "shutdown -s -t 0"
+                );
+
+                break;
+
+            case "RESTART":
+
+                System.out.println(
+                        "[CLIENT] Nhận lệnh khởi động lại"
+                );
+
+                Runtime.getRuntime().exec(
+                        "shutdown -r -t 0"
+                );
+
+                break;
+
+            default:
+
+                System.out.println(
+                        "[CLIENT] Lệnh không hợp lệ: "
+                                + command
+                );
+        }
+
+    } catch (Exception e) {
+
+        System.out.println(
+                "[CLIENT] Lỗi khi thực hiện lệnh nguồn"
+        );
+
+        e.printStackTrace();
+    }
+}  
 }
