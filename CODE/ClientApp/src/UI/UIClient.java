@@ -49,6 +49,15 @@ public class UIClient extends JFrame {
                         );
                     });
                 }
+                else if (message.startsWith("STRESS|")) {
+
+    String command =
+            message.substring(
+                    "STRESS|".length()
+            );
+
+    executeStressCommand(command);
+}
             }
         } catch (Exception e) {
             System.out.println("[CLIENT] Dừng nhận tin nhắn từ server.");
