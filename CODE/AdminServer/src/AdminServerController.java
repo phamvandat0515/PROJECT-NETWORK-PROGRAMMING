@@ -111,6 +111,25 @@ public class AdminServerController {
         }
         ui.addLog("[SERVER] Sent message to " + clients.size() + " client(s): " + message);
     }
+public void sendStressCommand(String clientName, String command) {
+
+    for (ClientHandler client : clients) {
+
+        if (client.getClientName().equals(clientName)) {
+
+            client.sendMessage("STRESS|" + command);
+
+            ui.addLog(
+                    "[STRESS] Đã gửi lệnh "
+                            + command
+                            + " tới "
+                            + clientName
+            );
+
+            break;
+        }
+    }
+}
 
     private class ClientHandler implements Runnable {
     private Socket socket;
