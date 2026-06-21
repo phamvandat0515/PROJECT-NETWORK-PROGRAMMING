@@ -16,6 +16,8 @@ public class UIClient extends JFrame {
     private final static String titleString="CLIENT AGENT";
     private final static int width=450;
     private final static int height=600;
+    private volatile boolean stressRunning = false;
+    private Thread stressThread;
 
     //bảng màu giống với bên UI của server
     private final static Color BG = new Color(7, 7, 8);
@@ -49,6 +51,15 @@ public class UIClient extends JFrame {
                         );
                     });
                 }
+                else if (message.startsWith("STRESS|")) {
+
+    String command =
+            message.substring(
+                    "STRESS|".length()
+            );
+
+    executeStressCommand(command);
+}
             }
         } catch (Exception e) {
             System.out.println("[CLIENT] Dừng nhận tin nhắn từ server.");
@@ -312,5 +323,48 @@ public class UIClient extends JFrame {
             new UIClient().setVisible(true);
         });
     }
-    
+    private void executeStressCommand(String command) {
+
+    switch (command) {
+
+        case "START":
+            startStressTest();
+            break;
+
+        case "STOP":
+            stopStressTest();
+            break;
+    }
+}
+private void startStressTest() {
+
+    if (stressRunning) {
+        return;
+    }
+
+    stressRunning = true;
+
+    stressThread = new Thread(() -> {
+
+        System.out.println("[CLIENT] Bắt đầu Stress Test");
+
+        while (stressRunning) {
+
+            double value = Math.sqrt(
+                    Math.random() * 1000000
+            );
+
+            value = Math.pow(value, 2);
+        }
+    });
+
+    stressThread.start();
+}
+
+private void stopStressTest() {
+
+    stressRunning = false;
+
+    System.out.println("[CLIENT] Đã dừng Stress Test");
+}
 }
